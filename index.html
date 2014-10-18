@@ -1,0 +1,93 @@
+<html>
+	<head>
+		<title>Layer Stack 4</title>
+		<script>
+
+			// Storage
+
+				//				Layer	
+				var allLayers =	[
+							[
+								'Background'
+							],
+							[
+								'Stars'
+							],
+							[
+								'Menu'
+							]
+						];
+
+				//				Layer		TopLX	TopLY	Width	Height	Action/Function
+				var allLinks =	[
+							[
+								'Stars',	300,	300,	100,	100,	function(){alert("i clicked the stars link");}
+							],
+							[
+								'Menu',		0,	0,	100,	100,	function(){alert("i clicked the menu link");}
+							]
+						];
+
+			// Events
+
+				window.onload	   =	function(){
+								for (intLayerCounter = 0; intLayerCounter < allLayers.length; intLayerCounter++) { 
+									funHelpAddFullscreenCanvas(allLayers[intLayerCounter][0]);
+								}
+							};
+
+				window.onmousedown =	function(incEvent){
+								for (intLayerCounter = (allLayers.length - 1); intLayerCounter > -1; intLayerCounter--) { 
+									for (intLinkCounter = 0; intLinkCounter < allLinks.length; intLinkCounter++) {
+										if(allLayers[intLayerCounter][0] == allLinks[intLinkCounter][0]){
+											if((incEvent.clientX >= allLinks[intLinkCounter][1]) && (incEvent.clientX <= (allLinks[intLinkCounter][1] + allLinks[intLinkCounter][3]))){
+												if((incEvent.clientY >= allLinks[intLinkCounter][2]) && (incEvent.clientY <= (allLinks[intLinkCounter][2] + allLinks[intLinkCounter][4]))){
+													allLinks[intLinkCounter][5]();
+												}
+											}
+										}
+									}
+								}
+							};
+			
+			// Helpers
+
+				function funHelpAddFullscreenCanvas(incCanvasId){
+					elmPageBody = document.getElementsByTagName('body')[0];
+					elmNewCanvas = document.createElement("canvas");
+					elmNewCanvas.style.position = "absolute";
+					elmNewCanvas.width = funHelpGetWindowWidth();
+					elmNewCanvas.height = funHelpGetWindowHeight();
+					elmNewCanvas.setAttribute("id",incCanvasId);
+					elmPageBody.appendChild(elmNewCanvas);
+				}
+				
+				function funHelpGetWindowWidth(){
+					var w = window,
+    					d = document,
+    					e = d.documentElement,
+    					g = d.getElementsByTagName('body')[0];
+    					return w.innerWidth || e.clientWidth || g.clientWidth;
+				}
+		
+				function funHelpGetWindowHeight(){
+					var w = window,
+    					d = document,
+    					e = d.documentElement,
+    					g = d.getElementsByTagName('body')[0];
+					return w.innerHeight|| e.clientHeight|| g.clientHeight;
+				}
+		</script>
+		<style>
+			html, 
+			body, 
+			canvas{
+				margin: 0;
+				padding: 0;
+				border: 0;
+			}
+		</style>
+	</head>
+	<body>
+	</body>
+</html>
